@@ -1,8 +1,8 @@
 '''
-    This code was based on these repositories:
-        https://github.com/datademofun/spotify-flask
-        https://github.com/drshrey/spotify-flask-auth-example
-        https://github.com/mari-linhares/spotify-flask
+This code was based on these repositories:
+    https://github.com/datademofun/spotify-flask
+    https://github.com/drshrey/spotify-flask-auth-example
+    https://github.com/mari-linhares/spotify-flask
 '''
 
 from flask import Flask, request, redirect, g, render_template, session
@@ -38,6 +38,23 @@ def valid_token(resp):
 
 @app.route("/")
 def index():
+    if 'auth_header' in session:
+        auth_header = session['auth_header']
+        # get profile data
+        profile_data = spotify.get_users_profile(auth_header)
+
+        # get user playlist data
+        playlist_data = spotify.get_users_playlists(auth_header)
+
+        # get user recently played tracks
+        recently_played = spotify.get_users_recently_played(auth_header)
+        
+        if valid_token(recently_played):
+            return render_template("profile.html",
+                               user=profile_data,
+                               playlists=playlist_data["items"],
+                               recently_played=recently_played["items"])
+
     return render_template('index.html')
 
 

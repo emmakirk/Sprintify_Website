@@ -17,9 +17,9 @@
 
 	<div class="container">
 
-	  <h1> Hi {{ user.display_name }} :) </h1>
+	  <h1> {{ user.display_name }} </h1>
 
-    <hr class="half-rule"/>
+ <!--  <hr class="half-rule"/> -->
 
 	  <div class="row">
       <div class="col-sm-4">
@@ -36,7 +36,7 @@
         </section>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-sm-8">
 
         <h3> Your playlists: </h3>
         <hr class="half-rule"/>
@@ -46,7 +46,7 @@
             <a href="{{ play.external_urls.spotify }}">
 
               <div class='col-sm-8'>
-                <span>{{ play.name }} </span>
+                <span>{{ play.name + " " + play.tracks.total|string}} </span>
               </div>
 
             </a>
@@ -70,7 +70,7 @@
             </a>
           </div>
         {% endfor %}
-      </div> -->
+      </div> 
 
       <div class="col-sm-4">
 
@@ -89,6 +89,7 @@
           </div>
         {% endfor %}
       </div>
+      -->
 
     </div>
 	</div>
