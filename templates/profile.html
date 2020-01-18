@@ -43,10 +43,10 @@
 
         {% for play in playlists %}
           <div class='row'>
-            <a href="{{ play.external_urls.spotify }}">
+            <a href= "{{url_for('filter', playlist_id=play.id) }}" >
 
               <div class='col-sm-8'>
-                <span>{{ play.name + " " + play.tracks.total|string}} </span>
+                <span>{{ play.tracks.total|string + " " + play.name}} </span>
               </div>
 
             </a>
