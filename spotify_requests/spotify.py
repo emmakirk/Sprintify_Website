@@ -187,8 +187,9 @@ def get_users_profile(auth_header):
 
 
 # https://developer.spotify.com/web-api/get-a-list-of-current-users-playlists/
+# Changed this to default to 50 playlists on return
 def get_users_playlists(auth_header):
-    url = USER_PLAYLISTS_ENDPOINT
+    url = USER_PLAYLISTS_ENDPOINT + "?limit=50"
     resp = requests.get(url, headers=auth_header)
     return resp.json()
 
