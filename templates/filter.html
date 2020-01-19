@@ -22,6 +22,10 @@
 	  <div class="row">
       <div class="col-sm-4">
 
+        {% if playlist.images %}
+          <img src="{{playlist.images[0].url}}" class="img-square">
+        {% endif %}
+
       </div>
     </div>
 	</div>

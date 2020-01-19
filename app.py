@@ -7,8 +7,6 @@ This code was based on these repositories:
 
 from flask import Flask, request, redirect, g, render_template, session
 from spotify_requests import spotify
-import spotipy
-import spotipy.util as util
 
 
 app = Flask(__name__)
@@ -28,22 +26,6 @@ def filter():
         return make_filter(playlist_id)
     except:
         return render_template("filter.html")
-    """
-    if 'auth_header' in session:
-        auth_header = session['auth_header']
-        # get profile data
-        profile_data = spotify.get_users_profile(auth_header)
-
-        # get user playlist data
-        playlist_data = spotify.get_users_playlists(auth_header)
-        
-        if valid_token(playlist_data):
-            return render_template("filter.html",
-                               user=profile_data,
-                               playlists=playlist_data["items"])
-
-    return render_template('filter.html')
-    """
 
 def make_filter(playlist_id):
     if 'auth_header' in session:
@@ -57,7 +39,6 @@ def make_filter(playlist_id):
             return render_template("filter.html", 
                                 user=profile_data,
                                 playlist = playlist_data)
-
 
 @app.route("/callback/")
 def callback():
