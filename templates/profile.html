@@ -17,7 +17,7 @@
 
 	<div class="container">
 
-	  <h1> {{ user.display_name }} </h1>
+	  <h1 style="color:white;"> {{ user.display_name }} </h1>
 
  <!--  <hr class="half-rule"/> -->
 
@@ -32,13 +32,13 @@
             <img src="http://bit.ly/2nXRRfX" class="img-square">
           {% endif %}
 
-          <h3>You have {{ user.followers.total }} followers!</h3>
+          <h3 style="color:white;">You have {{ user.followers.total }} followers!</h3>
         </section>
       </div>
 
       <div class="col-sm-8">
 
-        <h3> Your playlists: </h3>
+        <h3 style="color:white;"> Your playlists: </h3>
         <hr class="half-rule"/>
 
         {% for play in playlists %}

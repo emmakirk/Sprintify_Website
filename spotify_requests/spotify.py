@@ -21,6 +21,7 @@ except ImportError:
     5. ALBUMS
     6. USERS
     7. TRACKS
+    8. Playlists // Modified for Sprintify
 
 '''
 
@@ -264,3 +265,19 @@ def get_several_tracks(list_of_ids):
     url = "{}/?ids={ids}".format(GET_TRACK_ENDPOINT, ids=','.join(list_of_ids))
     resp = requests.get(url)
     return resp.json()
+
+# ---------------- 8. Playlists ------------------------
+# https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlist/
+
+GET_PLAYLIST_ENDPOINT = "{}/{}".format(SPOTIFY_API_URL, 'playlists')  # /<id>
+
+def get_playlist(auth_header, playlist_id):
+    url = "{}/{id}".format(GET_PLAYLIST_ENDPOINT, id=playlist_id)
+    resp = requests.get(url, headers=auth_header)
+    return resp.json()
+
+
+
+
+
+

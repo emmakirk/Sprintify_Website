@@ -22,6 +22,13 @@ def auth():
 
 @app.route("/filter")
 def filter():
+    try:
+        playlist_id = request.args["playlist_id"]
+        print(playlist_id)
+        return make_filter(playlist_id)
+    except:
+        return render_template("filter.html")
+    """
     if 'auth_header' in session:
         auth_header = session['auth_header']
         # get profile data
@@ -29,17 +36,28 @@ def filter():
 
         # get user playlist data
         playlist_data = spotify.get_users_playlists(auth_header)
-
-        # get user recently played tracks
-        recently_played = spotify.get_users_recently_played(auth_header)
         
-        if valid_token(recently_played):
+        if valid_token(playlist_data):
             return render_template("filter.html",
                                user=profile_data,
-                               playlists=playlist_data["items"],
-                               recently_played=recently_played["items"])
+                               playlists=playlist_data["items"])
 
     return render_template('filter.html')
+    """
+
+def make_filter(playlist_id):
+    if 'auth_header' in session:
+        auth_header = session['auth_header']
+        # get profile data
+        profile_data = spotify.get_users_profile(auth_header)
+        # get playlist data
+        playlist_data = spotify.get_playlist(auth_header, playlist_id)
+
+        if valid_token(playlist_data):
+            return render_template("filter.html", 
+                                user=profile_data,
+                                playlist = playlist_data)
+
 
 @app.route("/callback/")
 def callback():
@@ -54,41 +72,9 @@ def valid_token(resp):
 
 # -------------------------- API REQUESTS ----------------------------
 
-
 @app.route("/")
 def index():
     return profile()
-
-
-@app.route('/search/')
-def search():
-    try:
-        search_type = request.args['search_type']
-        name = request.args['name']
-        return make_search(search_type, name)
-    except:
-        return render_template('search.html')
-
-
-@app.route('/search/<search_type>/<name>')
-def search_item(search_type, name):
-    return make_search(search_type, name)
-
-
-def make_search(search_type, name):
-    if search_type not in ['artist', 'album', 'playlist', 'track']:
-        return render_template('index.html')
-
-    data = spotify.search(search_type, name)
-    api_url = data[search_type + 's']['href']
-    items = data[search_type + 's']['items']
-
-    return render_template('search.html',
-                           name=name,
-                           results=items,
-                           api_url=api_url,
-                           search_type=search_type)
-
 
 @app.route('/profile')
 def profile():
@@ -99,15 +85,11 @@ def profile():
 
         # get user playlist data
         playlist_data = spotify.get_users_playlists(auth_header)
-
-        # get user recently played tracks
-        recently_played = spotify.get_users_recently_played(auth_header)
         
-        if valid_token(recently_played):
+        if valid_token(playlist_data):
             return render_template("profile.html",
                                user=profile_data,
-                               playlists=playlist_data["items"],
-                               recently_played=recently_played["items"])
+                               playlists=playlist_data["items"])
 
     return render_template('profile.html')
 

@@ -17,21 +17,11 @@
 
 	<div class="container">
 
-	  <h1> {{ user.display_name }} </h1>
-
- <!--  <hr class="half-rule"/> -->
+        <h1 style="color:white;"> {{ playlist.name }} </h1>
 
 	  <div class="row">
       <div class="col-sm-4">
 
-        <section class="sec">
-
-          {% if user.images %}
-            <img src="{{user.images[0].url}}" class="img-square">
-          {% else %}
-            <img src="http://bit.ly/2nXRRfX" class="img-square">
-          {% endif %}
-        </section>
       </div>
     </div>
 	</div>
